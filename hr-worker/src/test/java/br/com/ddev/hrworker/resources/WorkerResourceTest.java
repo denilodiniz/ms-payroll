@@ -2,8 +2,8 @@ package br.com.ddev.hrworker.resources;
 
 import br.com.ddev.hrworker.dtos.WorkerDTO;
 import br.com.ddev.hrworker.entities.Worker;
-import br.com.ddev.hrworker.servicies.WorkerService;
-import br.com.ddev.hrworker.servicies.exceptions.ResourceNotFoundException;
+import br.com.ddev.hrworker.services.WorkerService;
+import br.com.ddev.hrworker.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package br.com.ddev.hrworker.servicies.exceptions;
+package br.com.ddev.hrworker.services.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 

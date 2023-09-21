@@ -1,8 +1,8 @@
-package br.com.ddev.hrworker.servicies;
+package br.com.ddev.hrworker.services;
 
 import br.com.ddev.hrworker.dtos.WorkerDTO;
 import br.com.ddev.hrworker.repositories.WorkerRepository;
-import br.com.ddev.hrworker.servicies.exceptions.ResourceNotFoundException;
+import br.com.ddev.hrworker.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package br.com.ddev.hrworker.resources.exceptions;
 
-import br.com.ddev.hrworker.servicies.exceptions.ResourceNotFoundException;
+import br.com.ddev.hrworker.services.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
