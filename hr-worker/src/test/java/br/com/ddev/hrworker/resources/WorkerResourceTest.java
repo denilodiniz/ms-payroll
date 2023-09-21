@@ -2,7 +2,6 @@ package br.com.ddev.hrworker.resources;
 
 import br.com.ddev.hrworker.dtos.WorkerDTO;
 import br.com.ddev.hrworker.entities.Worker;
-import br.com.ddev.hrworker.resources.exceptions.StandardError;
 import br.com.ddev.hrworker.servicies.WorkerService;
 import br.com.ddev.hrworker.servicies.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,18 +31,11 @@ class WorkerResourceTest {
     WorkerService workerService;
 
     private WorkerDTO workerDTO;
-    private StandardError standardError;
 
     @BeforeEach
     void setUp() {
         workerDTO = new WorkerDTO(
                 new Worker(1L, "Bob", 200.0)
-        );
-        standardError = new StandardError(
-                HttpStatus.NOT_FOUND.value(),
-                "Resource not found.",
-                "Worker with id " + workerDTO.getId() + " does not exist.",
-               "localhost:8080/" + workerDTO.getId()
         );
     }
 
@@ -84,6 +76,20 @@ class WorkerResourceTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(workerDTO, result.getBody());
         assertEquals(workerDTO.getClass(), result.getBody().getClass());
+    }
+
+    @Test
+    @DisplayName("Find worker by id when worker does not exist")
+    void findWorkerByIdWhenNotExist() {
+        // Configurar o comportamento do serviço para lançar a exceção quando um trabalhador não existe
+        when(workerService.findById(workerDTO.getId()))
+                .thenThrow(new ResourceNotFoundException("Worker with id " + workerDTO.getId() + " does not exist."));
+
+        // Chame o endpoint
+        ResourceNotFoundException resourceNotFoundException = assertThrows(ResourceNotFoundException.class,
+                () -> workerResource.findById(workerDTO.getId()));
+
+        assertEquals("Worker with id " + workerDTO.getId() + " does not exist.", resourceNotFoundException.getMessage());
     }
 
 }
