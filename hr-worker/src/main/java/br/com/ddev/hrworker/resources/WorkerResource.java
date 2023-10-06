@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/workers")
@@ -30,7 +32,11 @@ public class WorkerResource {
     @ApiResponse(responseCode = "200", description = "If there is no worker, returns an empty worker list")
     @GetMapping
     public ResponseEntity<List<WorkerDTO>> findAll() {
-        return ResponseEntity.ok().body(workerService.findAll());
+        return ResponseEntity.ok().body(workerService.findAll()
+                .stream()
+                .map(x -> x.add(linkTo(methodOn(WorkerResource.class).findById(x.getId())).withSelfRel()))
+                .collect(Collectors.toList())
+        );
     }
 
     @Operation(description = "Searches for a worker by ID and returns the worker data in the request body.")
@@ -40,7 +46,9 @@ public class WorkerResource {
     })
     @GetMapping(value = "/{id}")
     public ResponseEntity<WorkerDTO> findById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(workerService.findById(id));
+        return ResponseEntity.ok().body(workerService.findById(id)
+                .add(linkTo(methodOn(WorkerResource.class).findById(id)).withSelfRel())
+        );
     }
 
 }

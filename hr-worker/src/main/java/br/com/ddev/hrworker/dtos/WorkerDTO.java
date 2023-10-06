@@ -2,10 +2,11 @@ package br.com.ddev.hrworker.dtos;
 
 import br.com.ddev.hrworker.entities.Worker;
 import org.springframework.beans.BeanUtils;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 
-public class WorkerDTO implements Serializable {
+public class WorkerDTO extends RepresentationModel<WorkerDTO> implements Serializable {
 
     private Long id;
     private String name;
